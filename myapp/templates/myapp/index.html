@@ -1,0 +1,33 @@
+{% extends "myapp/template.html" %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'myapp/index.css' %}">
+{% endblock style %}
+
+{% block title %} Home Page {% endblock title %}
+
+{% block body %}
+<div id="pagewrap">
+    <div class="gallery">
+        {% if user.is_athenticated %}
+        <h5>
+            Hi! {{ user.first_name }} {{ user.last_name }}
+        </h5>
+        {% endif %}
+
+        {% for item in items %}
+
+        <article class="image">
+            <img src="{{ item.image }}" />
+            <p>{{ item.name }}</p>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Non, odio rem, eligendi accusantium optio placeat quis suscipit adipisci sapiente minima laborum! Esse, error. Quas beatae dicta quis rerum nesciunt sint.</p>
+        </article>
+
+        {% empty %}
+        <li>No Active item</li>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock body %}
