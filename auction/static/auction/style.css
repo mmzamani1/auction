@@ -137,6 +137,7 @@ a:focus {
     transition: 0.3s;
 }
 
+
 @media (prefers-reduced-motion: reduce) {
     .form-control {
         -webkit-transition: none;
