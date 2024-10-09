@@ -137,6 +137,25 @@ a:focus {
     transition: 0.3s;
 }
 
+.select-box {
+    background: transparent;
+    border: none;
+    height: 50px;
+    color: white !important;
+    border: 1px solid transparent;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+}
+
+.select-box option {
+    background-color: #fbceb5;
+    color: black;
+}
 
 @media (prefers-reduced-motion: reduce) {
     .form-control {
@@ -967,4 +986,13 @@ footer {
     right: 5%;
     bottom: 5%;
     border-radius: 10px;
+}
+
+.item-gallery p{
+    color: black;
+}
+
+.item-gallery img{
+    height: 50%;
+    width: 50%;
 }

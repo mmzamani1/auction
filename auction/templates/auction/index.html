@@ -10,19 +10,18 @@
 {% block body %}
 <div id="pagewrap">
     <div class="gallery">
-        {% if user.is_athenticated %}
-        <h5>
-            Hi! {{ user.first_name }} {{ user.last_name }}
-        </h5>
-        {% endif %}
 
         {% for item in items %}
-
+        
         <article class="image">
-            <img src="{{ item.image }}" />
-            <p>{{ item.name }}</p>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Non, odio rem, eligendi accusantium optio placeat quis suscipit adipisci sapiente minima laborum! Esse, error. Quas beatae dicta quis rerum nesciunt sint.</p>
-        </article>
+            <div class="item-gallery">
+                <img src="{{ item.image }}" />
+                <p>{{ item.title }}</p>
+                <p>{{ item.starting_bid }}$</p>
+                <p>{{ item.description }}</p>
+                <p>By {{ item.user}}</p>
+            </div>
+            </article>
 
         {% empty %}
         <li>No Active item</li>

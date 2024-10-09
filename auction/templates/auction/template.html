@@ -45,18 +45,30 @@
   <header class="site-navbar mt-3">
     <div class="container-fluid">
       <div class="row align-items-center">
-        <div class="site-logo col-6"><a href="home">Shim Shoes</a></div>
+        <div class="site-logo col-6"><a href="home">Mo Za De</a></div>
 
         <nav class="mx-auto site-navigation">
           <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
             <li><a href="home" class="nav-link active">Home</a></li>
             <li class="has-children">
-              <a href="Item-listings">Item Listings</a>
+              <a>Item Listings</a>
               <ul class="dropdown">
-                <li><a href="Item-single">Active Listings</a></li>
+                <li><a href="active-listings">Active Listings</a></li>
                 {% if user.is_authenticated %}
+                <li><a href="user-items">My Listings</a></li>
                 <li><a href="post-Item">Post An Item</a></li>
                 {% endif %}
+              </ul>
+            </li>
+            <li class="has-children">
+              <a>Category</a>
+              <ul class="dropdown">
+                {% for category in category_list %}
+
+                  <li><a href="home/{{ category.name }}">{{ category.name }}</a></li>
+
+                {% endfor %}
+
               </ul>
             </li>
             <li><a href="about">About</a></li>

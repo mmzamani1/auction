@@ -6,24 +6,51 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
 import requests
+from django.template.response import TemplateResponse
 from django.contrib import admin
 from .models import *
 
+admin.site.register(User)
 admin.site.register(Item)
+admin.site.register(Categorylist)
 
 base_url = 'auction'
 
+def template(request):
+    
+    category_list =  Categorylist.objects.all()
+    
+    return TemplateResponse(request, 'auctions/template.html', {
+        'category_list': category_list,
+    })
+
 def index(request):
-    """for i in range(3):
-        response = requests.get('https://randomuser.me/api')
-        image = response.json()['results'][0]['picture']['large']
-        name = response.json()['results'][0]['name']['first']
+    
+    """response = requests.get('https://fakestoreapi.com/products')
+    for i in range(3, 5):
         
-        items = Item.objects.create(image=image, name=name)"""
+        title = response.json()[i]['title']
+        starting_bid = response.json()[i]['price']
+        category_name = response.json()[i]['category']
+        description = response.json()[i]['description']
+        image = response.json()[i]['image']
+        
+        category = Categorylist.objects.get(name=category_name)
+        
+        users = User.objects.all()
+        for user in users :
+            if user.is_authenticated:
+                user = request.user
+        
+        items = Item.objects.get_or_create(user=user, title=title, starting_bid=starting_bid, category=category, description=description, image=image)"""
+        
+
+    
+        
     items = Item.objects.all()
     
     return render(request, f'{base_url}/index.html', {
-        'items': items
+        'items': items,
     })
 
 def login_page(request):
@@ -32,7 +59,6 @@ def login_page(request):
         password = request.POST['Password']
         
         user = authenticate(request, username=username, password=password)
-        print(user)
         
         if user is not None:
             login(request, user)
@@ -78,7 +104,31 @@ def signup_view(request):
         return render(request, f'{base_url}/signup.html')
     
 def post_item(request):
-    return render(request, f'{base_url}/post-item.html')
+    if request.method == 'POST':
+        title = request.POST['Title']
+        starting_bid = request.POST['Starting-Bid']
+        category_name = request.POST['Category']
+        description = request.POST['Description']
+        image = request.POST['Image-URL']
+        
+        category = Categorylist.objects.get(name=category_name)
+        
+        users = User.objects.all()
+        for user in users :
+            if user.is_authenticated:
+                user = request.user
+    
+        items = Item.objects.create(user=user, title=title, starting_bid=starting_bid, category=category, description=description, image=image)
+        
+        return HttpResponseRedirect(reverse("index"))
+        
+    elif request.method == 'GET':
+        
+        category_list = Categorylist.objects.all()
+        
+        return render(request, f'{base_url}/post-item.html', {
+            'category_list': category_list,
+        })
 
 def about_page(request):
     return render(request, f'{base_url}/about.html')
