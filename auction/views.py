@@ -131,7 +131,7 @@ def signup_view(request):
         
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("home"))
         else:
             return render(request, f'{base_url}/signup.html')
     
