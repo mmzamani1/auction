@@ -1,0 +1,32 @@
+{% extends "auction/template.html" %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'auction/index.css' %}">
+{% endblock style %}
+
+{% block title %} Home Page {% endblock title %}
+
+{% block body %}
+<div id="pagewrap">
+    <div class="gallery">
+
+        {% for item in items %}
+        
+        <article class="image">
+            <div class="item-gallery">
+                <img src="{{ item.image }}" />
+                <p>{{ item.title }}</p>
+                <p>{{ item.starting_bid }}$</p>
+                <p>{{ item.description }}</p>
+                <p>By {{ item.user}}</p>
+            </div>
+            </article>
+
+        {% empty %}
+        <li>No Active item</li>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock body %}
