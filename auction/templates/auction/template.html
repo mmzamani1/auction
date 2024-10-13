@@ -8,9 +8,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <link href="https://fonts.googleapis.com/css?family=Quicksand:400,600,700&display=swap" rel="stylesheet">
-  
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    
 
   <link rel="stylesheet" href="{% static 'auction/fonts/icomoon/style.css' %}">
 
@@ -45,18 +43,18 @@
   <header class="site-navbar mt-3">
     <div class="container-fluid">
       <div class="row align-items-center">
-        <div class="site-logo col-6"><a href="home">Mo Za De</a></div>
+        <div class="site-logo col-6"><a href="{% url 'home' %}">Mo Za De</a></div>
 
         <nav class="mx-auto site-navigation">
           <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
-            <li><a href="home" class="nav-link active">Home</a></li>
+            <li><a href="{% url 'home' %}" class="nav-link active">Home</a></li>
             <li class="has-children">
               <a>Item Listings</a>
               <ul class="dropdown">
-                <li><a href="active-listings">Active Listings</a></li>
+                <li><a href="{% url 'items' 'all' %}">Active Listings</a></li>
                 {% if user.is_authenticated %}
-                <li><a href="user-items">My Listings</a></li>
-                <li><a href="post-Item">Post An Item</a></li>
+                <li><a href="{% url 'useritems' %}">My Listings</a></li>
+                <li><a href="{% url 'postitem' %}">Post An Item</a></li>
                 {% endif %}
               </ul>
             </li>
@@ -65,20 +63,20 @@
               <ul class="dropdown">
                 {% for category in category_list %}
 
-                  <li><a href="home/{{ category.name }}">{{ category.name }}</a></li>
+                  <li><a href="{% url 'items' category.name %}">{{ category.name }}</a></li>
 
                 {% endfor %}
 
               </ul>
             </li>
             
-            <li><a href="about">About</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
          
             {% if user.is_authenticated %}
-            <li class="d-lg-none"><a href="post-Item"><span class="mr-2">+</span> Post an Item</a></li>
+            <li class="d-lg-none"><a href="{% url 'postitem' %}"><span class="mr-2">+</span> Post an Item</a></li>
             <li class="d-lg-none"><a href="{% url 'logout' %}">Log Out</a></li>
             {% else %}
-            <li class="d-lg-none"><a href="login">Log In</a></li>
+            <li class="d-lg-none"><a href="{% url 'login' %}">Log In</a></li>
             {% endif %}
 
           </ul>
@@ -87,17 +85,16 @@
         <div class="right-cta-menu text-right d-flex aligin-items-center col-6">
           <div class="ml-auto">
             {% if user.is_authenticated %}
-            <a href="post-Item" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block"><span
+            <a href="{% url 'postitem' %}" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block"><span
                 class="mr-2 icon-add"></span>Post an Item</a>
                 <a href="{% url 'logout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span
                     class="mr-2 icon-lock_open"></span>Log Out</a>
             {% else %}
-            <a href="login" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span
+            <a href="{% url 'login' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span
               class="mr-2 icon-lock_outline"></span>Log In</a>
             {% endif %}
           </div>
-          <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3"><span
-              class="icon-menu h3 m-0 p-0 mt-2"></span></a>
+          
         </div>
 
       </div>

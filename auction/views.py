@@ -16,14 +16,6 @@ admin.site.register(Categorylist)
 
 base_url = 'auction'
 
-def template(request):
-    
-    category_list =  Categorylist.objects.all()
-    
-    return TemplateResponse(request, 'auctions/template.html', {
-        'category_list': category_list,
-    })
-
 def index(request):
     
     """response = requests.get('https://fakestoreapi.com/products')
@@ -51,10 +43,23 @@ def index(request):
     category_list =  Categorylist.objects.all()
     
     return render(request, f'{base_url}/index.html', {
-        'items': items,
         'category_list': category_list,
     })
+    
+def items(request, category):
+    if category == "all":
+        items = Item.objects.all()
+    else :
+        cat = Categorylist.objects.get(name=category)
+        items = Item.objects.filter(category=cat)
+        
+    category_list =  Categorylist.objects.all()
 
+    return render(request, f'{base_url}/items.html', {
+        'items': items,
+        'category_list': category_list,
+        })
+    
 def login_page(request):
     category_list =  Categorylist.objects.all()
     
@@ -67,7 +72,7 @@ def login_page(request):
         
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("home"))
             
         else:
             return render(request, f'{base_url}/login.html', {
@@ -83,6 +88,23 @@ def login_page(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("login"))
+
+@login_required
+def user_items(request):
+    
+    users = User.objects.all()
+    for user in users :
+        if user.is_authenticated:
+            user = request.user
+    
+    items = Item.objects.filter(user=user)
+    
+    category_list =  Categorylist.objects.all()
+
+    return render(request, f'{base_url}/user-items.html', {
+        'items': items,
+        'category_list': category_list,
+        })
 
 def signup_view(request):
     
