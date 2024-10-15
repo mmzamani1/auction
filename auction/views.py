@@ -13,10 +13,11 @@ from .models import *
 admin.site.register(User)
 admin.site.register(Item)
 admin.site.register(Categorylist)
+admin.site.register(Bids)
 
 base_url = 'auction'
 
-def index(request):
+def home(request):
     
     """response = requests.get('https://fakestoreapi.com/products')
     for i in range(5, 8):
@@ -42,7 +43,7 @@ def index(request):
     items = Item.objects.all()
     category_list =  Categorylist.objects.all()
     
-    return render(request, f'{base_url}/index.html', {
+    return render(request, f'{base_url}/home.html', {
         'category_list': category_list,
     })
     
@@ -59,6 +60,40 @@ def items(request, category):
         'items': items,
         'category_list': category_list,
         })
+
+def item_page(request, item_title):
+    if request.method == 'GET':
+        item = Item.objects.get(title=item_title)
+        
+        category_list =  Categorylist.objects.all()
+        
+        largest_bid = Bids.objects.order_by('bid').filter(item=item).last()
+        if largest_bid:
+            min_bid = max(largest_bid.bid, item.starting_bid)
+        else:
+            min_bid = item.starting_bid
+        
+        return render(request, f'{base_url}/item-page.html', {
+            'item': item,
+            'category_list': category_list,
+            'bid': largest_bid,
+            'min_bid': min_bid,
+        })
+    
+    elif request.method == 'POST':
+        bid = request.POST['Bid']
+        
+        item = Item.objects.get(title=item_title)
+        
+        users = User.objects.all()
+        for user in users :
+            if user.is_authenticated:
+                user = request.user
+                
+        b = Bids.objects.create(user=user, item=item, bid=bid)
+        
+        return HttpResponseRedirect(reverse("itempage", args=(item_title,)))
+
     
 def login_page(request):
     category_list =  Categorylist.objects.all()
@@ -155,9 +190,9 @@ def post_item(request):
             if user.is_authenticated:
                 user = request.user
     
-        items = Item.objects.create(user=user, title=title, starting_bid=starting_bid, category=category, description=description, image=image)
+        item = Item.objects.create(user=user, title=title, starting_bid=starting_bid, category=category, description=description, image=image)
         
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("home"))
         
     elif request.method == 'GET':
         

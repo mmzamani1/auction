@@ -987,22 +987,3 @@ footer {
     right: 0;
     background-color: #fbceb5;
 }
-
-.item-partision {
-    background-color: #fbceb5;
-    position: absolute;
-    top: 2%;
-    left: 5%;
-    right: 5%;
-    bottom: 5%;
-    border-radius: 10px;
-}
-
-.item-gallery p{
-    color: black;
-}
-
-.item-gallery img{
-    height: 50%;
-    width: 50%;
-}
