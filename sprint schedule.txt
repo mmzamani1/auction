@@ -1,0 +1,77 @@
+Sprint Schedule
+Sprint 1: User Authentication
+Duration: 2 weeks
+Goals:
+
+Implement user registration and login functionality.
+Backlog Items:
+
+Signup functionality
+Implement signup view and form validation.
+Create user model and necessary fields.
+Login functionality
+Implement login view and form validation.
+Logout functionality
+Implement logout functionality.
+
+
+
+Sprint 2: Item Management
+Duration: 2 weeks
+Goals:
+
+Enable users to create and view auction items.
+Implement item listing and detail views.
+
+Backlog Items:
+
+Post item functionality
+Implement post_item view and form validation.
+Create item model and necessary fields (title, starting bid, category, description, image).
+
+Items listing functionality
+Item detail page
+
+Implement item_page view to display item details.
+
+Sprint 3: Bidding Functionality
+Duration: 2 weeks
+Goals:
+
+Allow users to place bids on auction items.
+Display minimum bid requirements.
+
+Backlog Items:
+
+Bidding logic
+Implement bidding logic in item_page view.
+Calculate and display minimum bid based on previous bids.
+Bid model creation
+
+Create bid model and necessary fields (user, item, bid amount).
+
+Sprint 4: User Dashboard and Category Management
+Duration: 2 weeks
+Goals:
+
+Provide users with a dashboard to manage their auction items.
+Enable filtering of items by category.
+
+Backlog Items:
+
+User items view
+Implement user_items view to list items posted by the logged-in user.
+Implement category filtering in items view.
+Admin interface for category management
+Create admin interface for category management.
+
+Sprint 5: About Page
+Duration: 2 weeks
+Goals:
+
+Create an about page for the auction site.
+
+Backlog Items:
+
+About page implementation
+Implement about_page view.

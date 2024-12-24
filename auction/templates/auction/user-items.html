@@ -9,7 +9,7 @@
 
         {% for item in items %}
         
-        <article class="image">
+        <a href="{% url 'itempage' item.title %}" class="image">
             <div class="item-gallery">
                 <img src="{{ item.image }}" />
                 <p>{{ item.title }}</p>
@@ -17,7 +17,7 @@
                 <p>{{ item.description }}</p>
                 <p>By {{ item.user}}</p>
             </div>
-            </article>
+        </a>
 
         {% empty %}
         <li>No Active item</li>

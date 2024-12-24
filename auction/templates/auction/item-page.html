@@ -21,7 +21,8 @@
                     ${{ item.starting_bid }}
                 </p>
                 {% endif %}
-
+                
+                {% if user.is_authenticated %}
                 <form action="{% url 'itempage' item.title %}" method="post">
                     {% csrf_token %}
                     <p class="form-group">
@@ -29,7 +30,11 @@
                         <button id="b-button" type="submit">Bid</button>
                     </p>
                 </form>
+                {% endif %}
+
                 <p id="desc">{{ item.description }}</p>
+
+                
             </div>
         </div>
 </div>

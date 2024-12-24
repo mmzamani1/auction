@@ -40,7 +40,7 @@ def home(request):
 
     
         
-    items = Item.objects.all()
+    items = Item.objects.filter(active=True)
     category_list =  Categorylist.objects.all()
     
     return render(request, f'{base_url}/home.html', {
@@ -49,10 +49,10 @@ def home(request):
     
 def items(request, category):
     if category == "all":
-        items = Item.objects.all()
+        items = Item.objects.filter(active=True)
     else :
         cat = Categorylist.objects.get(name=category)
-        items = Item.objects.filter(category=cat)
+        items = Item.objects.filter(category=cat, active=True)
         
     category_list =  Categorylist.objects.all()
 
@@ -63,7 +63,7 @@ def items(request, category):
 
 def item_page(request, item_title):
     if request.method == 'GET':
-        item = Item.objects.get(title=item_title)
+        item = Item.objects.get(title=item_title, active=True)
         
         category_list =  Categorylist.objects.all()
         
@@ -83,7 +83,7 @@ def item_page(request, item_title):
     elif request.method == 'POST':
         bid = request.POST['Bid']
         
-        item = Item.objects.get(title=item_title)
+        item = Item.objects.get(title=item_title, active=True)
         
         users = User.objects.all()
         for user in users :
@@ -93,7 +93,6 @@ def item_page(request, item_title):
         b = Bids.objects.create(user=user, item=item, bid=bid)
         
         return HttpResponseRedirect(reverse("itempage", args=(item_title,)))
-
     
 def login_page(request):
     category_list =  Categorylist.objects.all()
