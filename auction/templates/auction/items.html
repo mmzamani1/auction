@@ -18,9 +18,10 @@
                 <p>By {{ item.user}}</p>
             </div>
         </a>
-
         {% empty %}
-        <li>No Active item</li>
+            <div>
+                <li>No Active item</li>
+            </div>
         {% endfor %}
 
     </div>

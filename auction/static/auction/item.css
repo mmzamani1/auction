@@ -23,6 +23,10 @@
   flex-wrap: wrap;
 }
 
+.gallery {
+  color: #fbceb5;
+}
+
 .image {
   width: 28%;
   border: 1.5px solid #fbceb5;
