@@ -8,16 +8,31 @@
     <div class="gallery">
 
         {% for item in items %}
-        
-        <a href="{% url 'itempage' item.title %}" class="image">
+        {% if item.active %}
+            <a href="{% url 'itempage' item.title %}" class="image">
+                <div class="item-gallery">
+                    <img src="{{ item.image }}" />
+                    <p>{{ item.title }}</p>
+                    <p>{{ item.starting_bid }}$</p>
+                    <p>{{ item.description }}</p>
+                    <p>By {{ item.user}}</p>
+                </div>
+            </a>
+        {% else %}
+
+        <a class="image">
             <div class="item-gallery">
                 <img src="{{ item.image }}" />
                 <p>{{ item.title }}</p>
                 <p>{{ item.starting_bid }}$</p>
                 <p>{{ item.description }}</p>
                 <p>By {{ item.user}}</p>
+                <p><B>sold</B></p>
             </div>
         </a>
+
+        {% endif %}
+        
 
         {% empty %}
         <li>No Active item</li>

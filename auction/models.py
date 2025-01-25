@@ -12,7 +12,7 @@ class Categorylist(models.Model):
 
 class Item(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=50, blank=False)
+    title = models.CharField(max_length=100, blank=False)
     starting_bid = models.DecimalField(max_digits=10, decimal_places=2, blank=False)
     category = models.ForeignKey(Categorylist, on_delete=models.CASCADE, blank=True, related_name="options")
     description = models.TextField(max_length=500, blank=True)

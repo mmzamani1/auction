@@ -33,8 +33,17 @@
                 {% endif %}
 
                 <p id="desc">{{ item.description }}</p>
-
                 
+                {% if item.user == user %}
+                    <form action="{% url 'end_auction' item.title %}" method="post">
+                        {% csrf_token %}
+                        <p class="form-group">
+                            <button id="b-button" type="submit" style="background-color: red;">
+                                End Auction
+                            </button>
+                        </p>
+                    </form>
+                {% endif %}
             </div>
         </div>
 </div>

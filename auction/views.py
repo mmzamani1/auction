@@ -8,6 +8,8 @@ from django.contrib import messages
 import requests
 from django.template.response import TemplateResponse
 from django.contrib import admin
+from django.shortcuts import get_object_or_404
+from django.core.paginator import Paginator
 from .models import *
 
 admin.site.register(User)
@@ -55,10 +57,15 @@ def items(request, category):
         items = Item.objects.filter(category=cat, active=True)
         
     category_list =  Categorylist.objects.all()
+    
+    paginator = Paginator(items, 6)  
+    page_number = request.GET.get('page')
+    page_items = paginator.get_page(page_number)
 
     return render(request, f'{base_url}/items.html', {
         'items': items,
         'category_list': category_list,
+        'page_items': page_items,
         })
 
 def item_page(request, item_title):
@@ -93,6 +100,15 @@ def item_page(request, item_title):
         b = Bids.objects.create(user=user, item=item, bid=bid)
         
         return HttpResponseRedirect(reverse("itempage", args=(item_title,)))
+    
+@login_required
+def end_auction(request, item_title):
+    if request.method == 'POST':
+        item = get_object_or_404(Item, title=item_title, user=request.user)
+        item.active = False
+        item.save()
+        
+        return HttpResponseRedirect(reverse("items", args=('all',)))
     
 def login_page(request):
     category_list =  Categorylist.objects.all()
@@ -200,6 +216,41 @@ def post_item(request):
         return render(request, f'{base_url}/post-item.html', {
             'category_list': category_list,
         })
+        
+def api_item(request):
+    if request.method == 'GET':
+        
+        category_list =  Categorylist.objects.all()
+        
+        api_item_list = requests.get('https://fakestoreapi.com/products?limit=30').json()
+        
+        paginator = Paginator(api_item_list, 6)  
+        page_number = request.GET.get('page')
+        page_items = paginator.get_page(page_number)
+        
+        return render(request, f'{base_url}/apiitems.html', {
+            'category_list': category_list,
+            'items' : api_item_list,
+            'page_items': page_items,
+        })
+        
+    elif request.method == 'POST':
+        
+        title = request.POST['title']
+        starting_bid = request.POST['price']
+        description = request.POST['description']
+        category = Categorylist.objects.get(name=request.POST['category'])
+        image = request.POST['image']
+        
+        users = User.objects.all()
+        for user in users :
+            if user.is_authenticated:
+                user = request.user
+                
+        item = Item.objects.create(user=user , title=title, starting_bid=starting_bid, description=description, category=category, image=image)
+        item.save()
+        
+        return HttpResponseRedirect(reverse("items", args=('all',)))
 
 def about_page(request):
     
