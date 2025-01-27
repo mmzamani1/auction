@@ -1,3 +1,10 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+base_url = "weather/"
+
+def homePage(request):
+
+    
+    
+    return render(request, f"{base_url}/home.html")
