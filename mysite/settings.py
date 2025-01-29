@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'auction',
+    'weatherApp',
     'bootstrap5',
     'django.contrib.admin',
     'django.contrib.auth',
