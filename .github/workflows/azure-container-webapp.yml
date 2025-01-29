@@ -75,12 +75,6 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-      - name: Azure Login
-        uses: Azure/login@v2.2.0
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-          enable-AzPSSession: true
-        
       - name: Lowercase the repo name and username
         run: echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
 
