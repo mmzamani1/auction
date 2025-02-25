@@ -166,7 +166,6 @@ def signup_view(request):
         password2 = request.POST['Password2']
         fname = request.POST['Firstname']
         lname = request.POST['Lastname']
-        
 
         if password == password2:
             user = User.objects.create_user(username=username, password=password, email=email)
@@ -196,6 +195,8 @@ def post_item(request):
         category_name = request.POST['Category']
         description = request.POST['Description']
         image = request.POST['Image-URL']
+        image_file = request.FILES['Image']
+
         
         category = Categorylist.objects.get(name=category_name)
         
@@ -204,7 +205,7 @@ def post_item(request):
             if user.is_authenticated:
                 user = request.user
     
-        item = Item.objects.create(user=user, title=title, starting_bid=starting_bid, category=category, description=description, image=image)
+        item = Item.objects.create(user=user, title=title, starting_bid=starting_bid, category=category, description=description, image=image, image_file=image_file)
         
         return HttpResponseRedirect(reverse("home"))
         

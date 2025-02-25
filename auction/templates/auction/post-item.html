@@ -10,11 +10,15 @@
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-4">
                 <div class="login-wrap p-0">
-                    <form action="{% url 'postitem' %}" class="post-form" method="post">
+                    <form action="{% url 'postitem' %}" class="post-form" method="post" enctype='multipart/form-data'>
                         {% csrf_token %}
 
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Title" required name="Title">
+                        </div>
+
+                        <div class="form-group">
+                            <input type='file' name='Image' style="display:block" >
                         </div>
 
                         <div class="d-md-flex">

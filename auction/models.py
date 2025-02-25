@@ -17,6 +17,9 @@ class Item(models.Model):
     category = models.ForeignKey(Categorylist, on_delete=models.CASCADE, blank=True, related_name="options")
     description = models.TextField(max_length=500, blank=True)
     image = models.URLField(default='https://user-images.githubusercontent.com/52632898/161646398-6d49eca9-267f-4eab-a5a7-6ba6069d21df.png', blank=True)
+    
+    image_file = models.ImageField(upload_to='media/', blank=True)
+    
     active = models.BooleanField(default=True)
     watchlist = models.BooleanField(default=False)
     
