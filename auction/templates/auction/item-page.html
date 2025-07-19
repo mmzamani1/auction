@@ -6,44 +6,16 @@
 {% block body %}
 <div class="item-partision">
         <div class="item-card">
-            <img class="w-50" src="{{ item.image }}" />
+            <img class="w-50" src="{{ item.image.url }}" />
             
             <div class="item-details w-50">
                 <p id="title">{{ item.title }}</p>
-                <p id="user">By {{ item.user}}</p>
-                {% if bid %}
-                <p id="price">
-                    <del>${{ item.starting_bid }}</del>
-                    <ins>${{ bid.bid }}</ins>
-                </p>
-                {% else %}
-                <p id="price">
-                    ${{ item.starting_bid }}
-                </p>
-                {% endif %}
+               
+                <p id="desc">{{ item.description }}توضیحات</p>
+                <a href="{{ item.catalog.url }}" target=_blank">
+                    <p id="desc">برای مشاهده کاتالوگ کلیک کنید</p>
+                </a>
                 
-                {% if user.is_authenticated %}
-                <form action="{% url 'itempage' item.title %}" method="post">
-                    {% csrf_token %}
-                    <p class="form-group">
-                        <input type="number" id="b-box" placeholder="Place Bid" name="Bid" step=0.01 min="{{ min_bid }}">
-                        <button id="b-button" type="submit">Bid</button>
-                    </p>
-                </form>
-                {% endif %}
-
-                <p id="desc">{{ item.description }}</p>
-                
-                {% if item.user == user %}
-                    <form action="{% url 'end_auction' item.title %}" method="post">
-                        {% csrf_token %}
-                        <p class="form-group">
-                            <button id="b-button" type="submit" style="background-color: red;">
-                                End Auction
-                            </button>
-                        </p>
-                    </form>
-                {% endif %}
             </div>
         </div>
 </div>

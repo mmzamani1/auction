@@ -11,11 +11,9 @@
 
         <a href="{% url 'itempage' item.title %}" class="image">
             <div class="item-gallery">
-                <img src="{{ item.image }}" />
+                <img src="{{ item.image.url }}" alt="{{ item.title }}">
                 <p>{{ item.title }}</p>
-                <p>{{ item.starting_bid }}$</p>
                 <p>{{ item.description }}</p>
-                <p>By {{ item.user}}</p>
             </div>
         </a>
         {% empty %}
